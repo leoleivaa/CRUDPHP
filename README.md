@@ -22,6 +22,33 @@ CRUD de productos en PHP puro con MySQL (PDO), sin frameworks.
    ```
 5. Abre `http://localhost:8000` en el navegador.
 
+## Ejecutar con Docker
+
+No necesitas tener PHP ni MySQL instalados localmente.
+
+1. Clona el repositorio.
+2. Levanta los contenedores:
+   ```bash
+   docker compose up --build
+   ```
+   Esto construye la imagen de PHP + Apache, levanta MySQL y crea
+   automáticamente la base de datos `crudphp` con el contenido de
+   `database/schema.sql` (solo la primera vez que se crea el volumen).
+3. Abre `http://localhost:8000` en el navegador.
+4. Para detener los contenedores:
+   ```bash
+   docker compose down
+   ```
+   Para borrar también los datos de MySQL:
+   ```bash
+   docker compose down -v
+   ```
+
+La conexión a la base de datos usa variables de entorno (`DB_HOST`,
+`DB_NAME`, `DB_USER`, `DB_PASSWORD`), definidas en `docker-compose.yml`
+y con valores por defecto en `config/database.php` para uso local sin
+Docker.
+
 ## Estructura del proyecto
 
 ```
@@ -32,6 +59,8 @@ CRUDPHP/
 │   └── database.php       # Conexión PDO a MySQL
 ├── database/
 │   └── schema.sql         # Script de creación de la BD y datos de ejemplo
+├── Dockerfile               # Imagen PHP + Apache
+├── docker-compose.yml        # Servicios app (PHP) y db (MySQL)
 ├── includes/
 │   ├── layout.php         # Header/footer y helpers de mensajes flash
 │   ├── product_form.php   # Formulario reutilizable (crear/editar)

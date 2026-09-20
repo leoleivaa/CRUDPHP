@@ -2,11 +2,19 @@
 
 class Database
 {
-    private string $host = 'localhost';
-    private string $dbName = 'crudphp';
-    private string $username = 'root';
-    private string $password = '';
+    private string $host;
+    private string $dbName;
+    private string $username;
+    private string $password;
     private ?PDO $connection = null;
+
+    public function __construct()
+    {
+        $this->host = getenv('DB_HOST') ?: 'localhost';
+        $this->dbName = getenv('DB_NAME') ?: 'crudphp';
+        $this->username = getenv('DB_USER') ?: 'root';
+        $this->password = getenv('DB_PASSWORD') ?: '';
+    }
 
     public function getConnection(): PDO
     {
