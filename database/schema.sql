@@ -2,6 +2,11 @@ CREATE DATABASE IF NOT EXISTS crudphp CHARACTER SET utf8mb4 COLLATE utf8mb4_unic
 
 USE crudphp;
 
+-- Forces the session charset regardless of the connecting client's default
+-- (e.g. some `mysql` CLI builds default to latin1), otherwise the accented
+-- characters below get mangled on insert.
+SET NAMES utf8mb4;
+
 CREATE TABLE IF NOT EXISTS products (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(150) NOT NULL,
